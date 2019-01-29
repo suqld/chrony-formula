@@ -63,7 +63,7 @@
 
 {# Debian distros check timedatectl status to determine UTC setting #}
 {% if grains['os_family'] == "Debian" %}
-  {% if salt['cmd.shell']('timedatectl status | grep "RTC in local TZ: no"') %}
+  {% if salt['cmd.shell']('timedatectl status | grep "RTC in local TZ: yes"') %}
     {% do chrony['otherparams'].remove('rtconutc') %}
   {% endif %}
 {% endif %}
