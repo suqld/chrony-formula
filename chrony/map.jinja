@@ -61,9 +61,9 @@
   merge=salt['pillar.get']('chrony:config'))
 %}
 
-{# Debian distros check /etc/default/rcS to determine UTC setting #}
+{# Debian distros check timedatectl status to determine UTC setting #}
 {% if grains['os_family'] == "Debian" %}
-  {% if salt['cmd.run']('grep UTC=no /etc/default/rcS') %}
+  {% if salt['cmd.run']('timedatectl status | grep "RTC in local TZ: no"') %}
     {% do chrony['otherparams'].remove('rtconutc') %}
   {% endif %}
 {% endif %}
